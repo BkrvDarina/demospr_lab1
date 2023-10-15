@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <bean id="myCar"
+          class="com.example.demospr.Engine">
+        <!--    class = "com.example.demospr.Car">-->
+    </bean>
+
+    <bean id="mycar"
+          class="com.example.demospr.Car">
+        <property name="engine" ref="engine"/>
+        <!--                <constructor-arg ref="car"/>-->
+        <property name="brand" value="${car.brand}"/>
+        <property name="model" value="${car.model}"/>
+    </bean>
+
+    <!-- Конфігурація біну для Engine -->
+    <bean id="engine" class="com.example.demospr.Engine">
+        <property name="type" value="V6" />
+    </bean>
+
+    <!-- Конфігурація біну для com.example.demospr.Car із залежністю від Engine -->
+    <bean id="car" class="com.example.demospr.Car">
+<!--        <property name="brand" value="Toyota" />-->
+<!--        <property name="model" value="Camry" />-->
+        <property name="engine" ref="engine" />
+    </bean>
+
+    <!-- Конфігурація біну для Order із залежністю від Car -->
+    <bean id="order" class="com.example.demospr.Order">
+        <constructor-arg value="1" />
+        <constructor-arg value="2023-09-27" />
+        <constructor-arg ref="car" />
+    </bean>
+</beans>
